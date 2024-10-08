@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        
+        pollSCM('H/5 * * * *') 
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -20,6 +24,14 @@ pipeline {
             }
         }
 
+        stage('Show Date') {
+            steps {
+                script {
+                    def currentDate = new Date()
+                    echo "Current Date and Time: ${currentDate}"
+                }
+            }
+        }
     
     }
 
