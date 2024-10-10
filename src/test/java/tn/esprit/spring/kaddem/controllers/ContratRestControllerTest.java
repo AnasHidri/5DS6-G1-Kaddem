@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+
 @WebMvcTest(ContratRestController.class)
 class ContratRestControllerTest {
 

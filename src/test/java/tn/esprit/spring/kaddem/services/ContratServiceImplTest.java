@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.HashSet;
+
 
 public class ContratServiceImplTest {
 
@@ -55,14 +58,12 @@ public class ContratServiceImplTest {
         List<Contrat> contrats = new ArrayList<>();
         contrats.add(contrat);
 
-       
-        Set<Contrat> contratSet = new HashSet<>(contrats);
-
-        when(contratRepository.findAll()).thenReturn(new ArrayList<>(contratSet));
+  
+        when(contratRepository.findAll()).thenReturn(contrats);
 
         List<Contrat> result = contratService.retrieveAllContrats();
 
-        assert result.size() == 1;
+        assertEquals(1, result.size());
         verify(contratRepository, times(1)).findAll();
     }
     @Test

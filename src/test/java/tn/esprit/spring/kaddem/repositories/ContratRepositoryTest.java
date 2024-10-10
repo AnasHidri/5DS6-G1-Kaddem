@@ -28,8 +28,7 @@ class ContratRepositoryTest {
         contrat = new Contrat();
         contrat.setDateDebutContrat(new Date());
         contrat.setDateFinContrat(new Date());
-        contrat.setSpecialite(Specialite.SOME_SPECIALITY); // Replace with an actual specialite
-        contrat.setArchive(false);
+        contrat.setSpecialite(Specialite.IA); 
         contrat.setMontantContrat(1000);
         contratRepository.save(contrat);
     }
