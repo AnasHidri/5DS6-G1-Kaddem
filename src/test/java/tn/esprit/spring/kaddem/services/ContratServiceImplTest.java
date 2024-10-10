@@ -14,14 +14,14 @@ import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
-
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.HashSet;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContratServiceImplTest {
 
@@ -50,16 +50,15 @@ public class ContratServiceImplTest {
         etudiant = new Etudiant();
         etudiant.setNomE("John");
         etudiant.setPrenomE("Doe");
-        etudiant.setContrats(new ArrayList<>());
+        etudiant.setContrats(new HashSet<>());
     }
 
     @Test
     public void testRetrieveAllContrats() {
-        List<Contrat> contrats = new ArrayList<>();
+         List<Contrat> contrats = new ArrayList<>();
         contrats.add(contrat);
 
-  
-        when(contratRepository.findAll()).thenReturn(contrats);
+        when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
 
         List<Contrat> result = contratService.retrieveAllContrats();
 
@@ -112,7 +111,7 @@ public class ContratServiceImplTest {
     public void testGetChiffreAffaireEntreDeuxDates() {
         Date startDate = new Date(System.currentTimeMillis() - 86400000); // 1 day in past
         Date endDate = new Date();
-        when(contratRepository.findAll()).thenReturn(List.of(contrat));
+        when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
 
         float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
 
