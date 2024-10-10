@@ -36,6 +36,7 @@ public class ContratServiceImplTest {
 
     @BeforeEach
     public void setUp() {
+        
         MockitoAnnotations.openMocks(this);
         contrat = new Contrat();
         contrat.setIdContrat(1);
@@ -54,14 +55,16 @@ public class ContratServiceImplTest {
         List<Contrat> contrats = new ArrayList<>();
         contrats.add(contrat);
 
-        when(contratRepository.findAll()).thenReturn(contrats);
+       
+        Set<Contrat> contratSet = new HashSet<>(contrats);
+
+        when(contratRepository.findAll()).thenReturn(new ArrayList<>(contratSet));
 
         List<Contrat> result = contratService.retrieveAllContrats();
 
         assert result.size() == 1;
         verify(contratRepository, times(1)).findAll();
     }
-
     @Test
     public void testAddContrat() {
         when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
