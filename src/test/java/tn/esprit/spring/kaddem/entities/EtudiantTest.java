@@ -22,4 +22,5 @@ public class EtudiantTest {
         assertEquals(Option.SE, etudiant.getOp());
     }
 
+
 }
