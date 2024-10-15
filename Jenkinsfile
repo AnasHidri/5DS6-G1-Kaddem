@@ -1,55 +1,48 @@
 pipeline {
     agent any
 
-    triggers {
-        
-        pollSCM('H/5 * * * *') 
-    }
     stages {
-        stage('Checkout') {
+        stage('GIT') {
             steps {
-                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
-            }
-        }//compile
-        //test nvm sonar:sonar config -port
-
-
-        stage('Build') {
-            steps {
-               sh 'mvn clean install -DskipTests'
+                echo "Getting Project from Git";
+                checkout scm
             }
         }
 
-        stage('MVN Sonarqube') {
-            steps {
-                sh "mvn sonar:sonar -Dsonar.login=squ_95f478edf752e17864cab7c6293e4b2977f84764"
-        }
-        }
+        stage('Maven Clean') {
+                    steps {
+                        echo "Running Maven Clean"
+                        sh 'mvn clean'
+                    }
+                }
 
+                stage('Maven Compile') {
+                    steps {
+                        echo "Compiling the project with Maven"
+                        sh 'mvn compile'
+                    }
+                }
 
-        /*stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }*/
-
-        stage('Show Date') {
+        stage('MVN SONARQUBE') {
             steps {
                 script {
-                    def currentDate = new Date()
-                    echo "Current Date and Time: ${currentDate}"
+                    // Provide your SonarQube server URL and credentials
+                    withSonarQubeEnv('sonarqube') { // This assumes you have a SonarQube server configured in Jenkins
+                        sh 'mvn sonar:sonar -Dsonar.login=squ_6557b3271174c410170f1d59869d5e7e5cd49a99' // Replace with your actual token
+                    }
                 }
             }
         }
-    
-    }
 
-    post {
-        success {
-            echo 'Build finished successfully!'
-        }
-        failure {
-            echo 'Build failed!'
+        stage('Quality Gate') {
+            steps {
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline failed due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
         }
     }
 }
