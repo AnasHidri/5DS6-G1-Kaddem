@@ -21,6 +21,4 @@ public class EtudiantTest {
         assertEquals("Skander", etudiant.getPrenomE());
         assertEquals(Option.SE, etudiant.getOp());
     }
-
-
 }
