@@ -32,15 +32,6 @@ pipeline {
                 sh 'mvn test'
             }
         }*/
-
-        stage('Show Date') {
-            steps {
-                script {
-                    def currentDate = new Date()
-                    echo "Current Date and Time: ${currentDate}"
-                }
-            }
-        }
     
     }
 
