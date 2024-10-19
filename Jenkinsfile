@@ -26,6 +26,13 @@ pipeline {
         }
         }
 
+            stage('Deploy') {
+            steps {
+                // Commande pour déployer avec l'option de skipper les tests
+                sh 'mvn deploy -DskipTests=true'
+            }
+        }
+
 
         /*stage('Test') {
             steps {
