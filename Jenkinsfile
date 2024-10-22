@@ -10,13 +10,12 @@ pipeline {
             steps {
                 git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
             }
-        }//compile
-        //test nvm sonar:sonar config -port
+        }
 
 
         stage('Build') {
             steps {
-               sh 'mvn clean install -DskipTests'
+               sh 'mvn clean install'
             }
         }
 
@@ -25,13 +24,18 @@ pipeline {
                 sh "mvn sonar:sonar -Dsonar.login=squ_6557b3271174c410170f1d59869d5e7e5cd49a99"
         }
         }
+        stage('Deploy') {
+                    steps {
+                        sh 'mvn deploy'
+                    }
+                }
 
 
-        /*stage('Test') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
-        }*/
+        }
     
     }
 
