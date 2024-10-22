@@ -25,6 +25,12 @@ pipeline {
                 sh "mvn sonar:sonar -Dsonar.login=squ_1fbee3959d7b0a7daed827080bcde342dc6aef54"
         }
         }
+        stage('Deploy') {
+            steps {
+                // Commande pour déployer avec l'option de skipper les tests
+                sh 'mvn deploy -DskipTests=true'
+            }
+        }
 
 
         /*stage('Test') {
