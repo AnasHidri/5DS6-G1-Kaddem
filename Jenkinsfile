@@ -6,12 +6,12 @@ pipeline {
         pollSCM('H/5 * * * *') 
     }
     stages {
+
         stage('Checkout') {
             steps {
                 git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
             }
-        }//compile
-        //test nvm sonar:sonar config -port
+        }
 
 
         stage('Build') {
@@ -22,23 +22,21 @@ pipeline {
 
         stage('MVN Sonarqube') {
             steps {
-                sh "mvn sonar:sonar -Dsonar.login=squ_95f478edf752e17864cab7c6293e4b2977f84764 " 
+                sh "mvn sonar:sonar -Dsonar.login=squ_6557b3271174c410170f1d59869d5e7e5cd49a99"
         }
         }
-
-            stage('Deploy') {
-            steps {
-                // Commande pour déployer avec l'option de skipper les tests
-                sh 'mvn deploy -DskipTests=true'
-            }
-        }
+        stage('Deploy') {
+                    steps {
+                        sh 'mvn deploy -DskipTests=true'
+                    }
+                }
 
 
         /*stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }*/
+                    steps {
+                        sh 'mvn test'
+                    }
+                }*/
     
     }
 
