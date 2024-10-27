@@ -41,7 +41,7 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    sh "sudo docker build -t ${registry}:${RELEASE_VERSION} ."
+                    dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
 
                 }
             }
