@@ -1,4 +1,10 @@
 pipeline {
+        environment {
+                RELEASE_VERSION = "0.0.1"
+                registry = "nadou/kaddem"
+                registryCredential = 'dockerhub_id'
+                dockerImage = ''
+            }
     agent any
 
     triggers {
@@ -23,11 +29,20 @@ pipeline {
         stage('MVN Sonarqube') {
             steps {
                 sh "mvn sonar:sonar -Dsonar.login=squ_076929bb198ea9de082c55c5eb1af2997a409941"
-        }
+             }
         }
         stage('Deploy') {
                     steps {
                         sh 'mvn deploy -DskipTests=true'
+                    }
+        }
+
+        stage('Building our image') {
+                    steps {
+                        script {
+                            dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
+
+                        }
                     }
                 }
 

@@ -10,7 +10,7 @@
     </parent>
     <groupId>tn.esprit.spring</groupId>
     <artifactId>kaddem</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
@@ -31,6 +31,7 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -74,6 +75,18 @@
 
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>deploymentRepo</id>
+            <name>Nexus Repository</name>
+            <url>http://192.168.1.22:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deploymentSnapshotRepo</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://192.168.1.22:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -91,17 +104,6 @@
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <repository>
-            <id>deploymentRepo</id>
-            <name>Nexus Repository</name>
-            <url>http://192.168.1.22:8081/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>deploymentSnapshotRepo</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://192.168.1.22:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+
 
 </project>
