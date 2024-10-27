@@ -1,11 +1,18 @@
 pipeline {
+        agent any
+
+        tools {
+                // Utilisation de Maven 3.6.3 et JDK 17 configurés dans Jenkins
+                maven 'Maven 3.6.3'
+                jdk 'JDK 17'
+            }
+
         environment {
                 RELEASE_VERSION = "0.0.1"
                 registry = "nadou/kaddem"
                 registryCredential = 'dockerhub_id'
                 dockerImage = ''
             }
-    agent any
 
     triggers {
         
