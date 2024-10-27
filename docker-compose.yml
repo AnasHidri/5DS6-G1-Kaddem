@@ -4,7 +4,7 @@ services:
   jenkins:
     build:
       context: .
-      dockerfile: Dockerfile.jenkins
+      dockerfile: dockerfile.jenkins
     networks:
       - sonar-jenkins-nexus-network
     ports:
@@ -47,7 +47,7 @@ services:
   springboot-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: springboot-app
     networks:
       - sonar-jenkins-nexus-network
