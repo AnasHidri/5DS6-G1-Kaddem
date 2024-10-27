@@ -1,4 +1,10 @@
 pipeline {
+        environment {
+        RELEASE_VERSION = "0.0.1"
+        registry = "anashidri/kaddem"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
     agent any
 
     triggers {
@@ -30,6 +36,13 @@ pipeline {
             steps {
                 // Commande pour déployer avec l'option de skipper les tests
                 sh 'mvn deploy -DskipTests=true'
+            }
+        }
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
+                }
             }
         }
 
