@@ -1,0 +1,21 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk && \
+    apt-get clean;
+
+ARG MAVEN_VERSION=3.6.3
+ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+
+RUN curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
+    tar -xzf /tmp/apache-maven.tar.gz -C /opt && \
+    ln -s /opt/apache-maven-${MAVEN_VERSION} /opt/maven && \
+    rm -f /tmp/apache-maven.tar.gz
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV M2_HOME=/opt/maven
+ENV PATH="${M2_HOME}/bin:${PATH}"
+
+USER jenkins

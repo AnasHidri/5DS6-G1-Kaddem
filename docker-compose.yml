@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    networks:
+      - sonar-jenkins-nexus-network
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    networks:
+      - sonar-jenkins-nexus-network
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    networks:
+      - sonar-jenkins-nexus-network
+    ports:
+      - "8081:8081"
+    volumes:
+      - nexus-data:/nexus-data
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    networks:
+      - sonar-jenkins-nexus-network
+    environment:
+      MYSQL_ROOT_PASSWORD: "0000"
+      MYSQL_DATABASE: "kaddem"
+    ports:
+      - "3306:3306"
+
+  springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot-app
+    networks:
+      - sonar-jenkins-nexus-network
+    ports:
+      - "8089:8089"
+
+networks:
+  sonar-jenkins-nexus-network:
+
+volumes:
+  jenkins_home:
+  nexus-data:
