@@ -101,17 +101,7 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <skip>true</skip>  <!-- Set to false to enable deployment -->
-                    <updateReleaseInfo>true</updateReleaseInfo>
-                    <retryFailedDeploymentCount>1</retryFailedDeploymentCount>
-                    <version>0.0.3</version>
-                </configuration>
-            </plugin>
+            
         </plugins>
     </build>
 
