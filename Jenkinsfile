@@ -25,6 +25,20 @@ pipeline {
                 sh "mvn sonar:sonar -Dsonar.login=squ_93579bd9fc8bb68995c067e8a7a60400edfed1ab"
         }
         }
+        stage('Deploy') {
+                    steps {
+                        // Commande pour déployer avec l'option de skipper les tests
+                        sh 'mvn deploy -DskipTests=true'
+                    }
+                }
+        stage('Building our image') {
+                    steps {
+                        script {
+                            dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
+
+                        }
+                    }
+                }
 
 
         /*stage('Test') {
