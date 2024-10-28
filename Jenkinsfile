@@ -8,7 +8,19 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git',branch:'Si-wajdi'
+                echo 'pulling...'
+
+                checkout([$class: 'GitSCM',
+
+                          branches: [[name: 'Si-wajdi']],
+
+                          doGenerateSubmoduleConfigurations: false,
+
+                          extensions: [],
+
+                          submoduleCfg: [],
+
+                          userRemoteConfigs: [[url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git']]])
                 
             }
         }//compile
