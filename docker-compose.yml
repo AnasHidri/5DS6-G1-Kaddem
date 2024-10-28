@@ -64,3 +64,6 @@ networks:
 volumes:
   jenkins_home:
   nexus-data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
