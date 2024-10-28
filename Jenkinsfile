@@ -25,16 +25,9 @@ pipeline {
             }
         }//compile
         //test nvm sonar:sonar config -port
-        stage('Nettoyage du projet avec Maven') {
+        stage('Build') {
             steps {
-                cleanWs()
-                sh 'mvn clean'
-            }
-        }
-
-        stage('Compilation du projet avec Maven') {
-            steps {
-                sh 'mvn compile'
+               sh 'mvn clean install -DskipTests'
             }
         }
 
