@@ -8,20 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'pulling...'
-
-                checkout([$class: 'GitSCM',
-
-                          branches: [[name: 'Si-wajdi']],
-
-                          doGenerateSubmoduleConfigurations: false,
-
-                          extensions: [],
-
-                          submoduleCfg: [],
-
-                          userRemoteConfigs: [[url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git']]])
-                
+                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
             }
         }//compile
         //test nvm sonar:sonar config -port
@@ -39,7 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Commande pour déployer avec l'option de skipper les tests
-                sh 'mvn deploy -Durl=http://192.168.1.50/repository/maven-releases/ -DskipTests=true'
+                sh 'mvn deploy  -DskipTests=true'
             }
         }
 
