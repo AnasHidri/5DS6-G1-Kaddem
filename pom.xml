@@ -10,8 +10,8 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit.spring</groupId>
-    <artifactId>kaddem-wajdi</artifactId>
-    <version>0.0.1</version>
+    <artifactId>kaddem</artifactId>
+    <version>0.0.3</version>
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
@@ -80,11 +80,11 @@
             <name>Nexus Repository</name>
             <url>http://192.168.1.50:8081/repository/maven-releases/</url>
         </repository>
-        <snapshotRepository>
+       <!-- <snapshotRepository>
             <id>deploymentSnapshotRepo</id>
             <name>Nexus Snapshot Repository</name>
             <url>http://192.168.1.50:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
+        </snapshotRepository> -->
     </distributionManagement>
 
     <build>
@@ -99,6 +99,17 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <skip>false</skip>  <!-- Set to false to enable deployment -->
+                    <updateReleaseInfo>true</updateReleaseInfo>
+                    <retryFailedDeploymentCount>3</retryFailedDeploymentCount>
+                    <uniqueVersion>true</uniqueVersion>
                 </configuration>
             </plugin>
         </plugins>
