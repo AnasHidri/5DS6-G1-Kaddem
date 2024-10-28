@@ -107,7 +107,7 @@
                 <version>3.1.0</version>
                 <configuration>
                     <skip>false</skip>  <!-- Set to false to enable deployment -->
-                    <updateReleaseInfo>true</updateReleaseInfo>
+                    <updateReleaseInfo>false</updateReleaseInfo>
                     <retryFailedDeploymentCount>3</retryFailedDeploymentCount>
                     <uniqueVersion>true</uniqueVersion>
                 </configuration>
