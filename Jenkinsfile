@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git/tree/Si-wajdi'
+                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git/Si-wajdi'
             }
         }//compile
         //test nvm sonar:sonar config -port
