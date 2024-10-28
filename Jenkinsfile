@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Commande pour déployer avec l'option de skipper les tests
-                sh 'mvn deploy -DskipTests=true'
+                sh 'mvn deploy -Durl=http://192.168.1.50/repository/maven-releases/ -DskipTests=true'
             }
         }
 
