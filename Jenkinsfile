@@ -8,15 +8,21 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
+                git url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git',branch:'Si-wajdi'
+                
             }
         }//compile
         //test nvm sonar:sonar config -port
-
-
-        stage('Build') {
+        stage('Nettoyage du projet avec Maven') {
             steps {
-               sh 'mvn clean install -DskipTests'
+                cleanWs()
+                sh 'mvn clean'
+            }
+        }
+
+        stage('Compilation du projet avec Maven') {
+            steps {
+                sh 'mvn compile'
             }
         }
 
