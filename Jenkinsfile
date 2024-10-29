@@ -31,7 +31,7 @@ pipeline {
 
         stage('MVN Sonarqube') {
        steps {
-           sh "mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=squ_dc6a5c19cb3150548a7755e98c15c591ccb5556c"
+           sh "mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=squ_ba3705efb7ebf90d320df79fcfab3367e9322dd2"
        }
    }
 
@@ -49,7 +49,7 @@ pipeline {
                         }
                     }
                 }
-        stage('Deploy with Docker Compose') {
+        /* stage('Deploy with Docker Compose') {
                     steps {
                         script {
                             // Stop existing containers
@@ -65,7 +65,7 @@ pipeline {
                             sh 'docker-compose ps'
                         }
                     }
-                }
+                } */
 
 
         /*stage('Test') {
