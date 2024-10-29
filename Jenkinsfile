@@ -1,10 +1,5 @@
 pipeline {
-environment {
-        RELEASE_VERSION = "0.0.1"
-        registry = "skander/kaddem"
-        registryCredential = 'dockerhub_id'
-        dockerImage = ''
-    }
+
     agent any
 
     triggers {
