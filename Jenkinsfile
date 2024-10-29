@@ -31,7 +31,7 @@ pipeline {
 
         stage('MVN Sonarqube') {
        steps {
-           sh "mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=squ_ba3705efb7ebf90d320df79fcfab3367e9322dd2"
+           sh "mvn sonar:sonar -Dsonar.host.url=http://192.168.1.22:9000 -Dsonar.login=squ_ba3705efb7ebf90d320df79fcfab3367e9322dd2"
        }
    }
 
