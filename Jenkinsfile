@@ -22,7 +22,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
+                git branch: 'nadou', url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
             }
         }
 
