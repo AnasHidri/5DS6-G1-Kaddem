@@ -1,5 +1,10 @@
 pipeline {
-
+        environment {
+        RELEASE_VERSION = "0.0.1"
+        registry = "skander/kaddem"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
     agent any
 
     triggers {
@@ -34,7 +39,14 @@ pipeline {
                 sh 'mvn deploy -DskipTests=true'
             }
         }
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
 
+                }
+            }
+        }
         /*stage('Test') {
             steps {
                 sh 'mvn test'
