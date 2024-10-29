@@ -7,8 +7,10 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            steps {
-git branch: 'skander', url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'            }
+            steps {checkout([                     $class: 'GitSCM',                     branches: [[name: '*/skander']],
+                    // Remplacez 'main' par la branche correcte
+                      userRemoteConfigs: [[url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git']]                 ])
+
         }//compile
         //test nvm sonar:sonar config -port
 
@@ -43,3 +45,4 @@ git branch: 'skander', url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'   
         }
     }
 }
+
