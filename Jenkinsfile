@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
+                git branch: 'Nour', url: 'https://github.com/AnasHidri/5DS6-G1-Kaddem.git'
             }
         }//compile
         //test nvm sonar:sonar config -port
@@ -31,14 +31,7 @@ pipeline {
                         sh 'mvn deploy -DskipTests=true'
                     }
                 }
-        stage('Building our image') {
-                    steps {
-                        script {
-                            dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
 
-                        }
-                    }
-                }
 
 
         /*stage('Test') {
