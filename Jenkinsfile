@@ -1,14 +1,11 @@
 pipeline {
-        agent any
-
-
-
         environment {
-                RELEASE_VERSION = "0.0.1"
-                registry = "nadaaissaoui/kaddem"
-                registryCredential = 'dockerhub_id'
-                dockerImage = ''
-            }
+                        RELEASE_VERSION = "0.0.1"
+                        registry = "nadaaissaoui/kaddem"
+                        registryCredential = 'dockerhub_id'
+                        dockerImage = ''
+        }
+        agent any
 
     triggers {
         
