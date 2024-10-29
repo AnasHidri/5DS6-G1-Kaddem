@@ -1,4 +1,9 @@
 pipeline {
+  environment {
+        RELEASE_VERSION = "0.0.1"
+        registry = "nourghali/kaddem"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
     agent any
 
     triggers {
@@ -33,13 +38,22 @@ pipeline {
                 }
 
 
+  stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
+
+                }
+            }
+        }
+
 
         /*stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }*/
-    
+
     }
 
     post {
