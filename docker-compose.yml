@@ -3,7 +3,7 @@ version: "3.8"
 services:
   mysqldb:
     image: mysql
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem_db
@@ -17,17 +17,19 @@ services:
     depends_on:
       - mysqldb
     image: wajdiouaili/kaddem:0.0.7
-    restart: on-failure
+    restart: always
     ports:
       - "8082:8082"
     stdin_open: true
     tty: true
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/kaddem?createDatabaseIfNotExist=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/devops?createDatabaseIfNotExist=true",
+            "spring.datasource.username": "root",
+            "spring.datasource.password": "",
+            "spring.jpa.hibernate.ddl-auto": "update",
+            "spring.jpa.show-sql": "true"
+          }'
+    command: --allow-public-key-retrieval=true
 volumes:
   db:
