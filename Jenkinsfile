@@ -1,15 +1,11 @@
 pipeline {
         agent any
 
-        tools {
-                // Utilisation de Maven 3.6.3 et JDK 17 configurés dans Jenkins
-                maven 'Maven 3.6.3'
-                jdk 'JDK 17'
-            }
+
 
         environment {
                 RELEASE_VERSION = "0.0.1"
-                registry = "nadou/kaddem"
+                registry = "nadaaissaoui/kaddem"
                 registryCredential = 'dockerhub_id'
                 dockerImage = ''
             }
@@ -50,6 +46,23 @@ pipeline {
                         script {
                             dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
 
+                        }
+                    }
+                }
+        stage('Deploy with Docker Compose') {
+                    steps {
+                        script {
+                            // Stop existing containers
+                            sh 'docker-compose down || true'
+
+                            // Start the applications
+                            sh 'docker-compose up -d'
+
+
+                            sh 'sleep 30'
+
+                            // Verify deployment
+                            sh 'docker-compose ps'
                         }
                     }
                 }
