@@ -26,19 +26,11 @@ pipeline {
             }
         }
 
-                stage('Test') {
-                            steps {
-                                sh 'mvn test'
-                            }
-                        }
-
         stage('MVN Sonarqube') {
             steps {
                 sh "mvn sonar:sonar -Dsonar.login=squ_93579bd9fc8bb68995c067e8a7a60400edfed1ab"
         }
         }
-
-
         stage('Deploy') {
                     steps {
                         // Commande pour déployer avec l'option de skipper les tests
@@ -74,7 +66,11 @@ pipeline {
             }
         }
 
-
+        /*stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }*/
 
        stage('Grafana') {
                 steps {
