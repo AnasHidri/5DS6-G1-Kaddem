@@ -1,29 +1,30 @@
 package tn.esprit.spring.kaddem.services;
 
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.SpringBootTest;
-import tn.esprit.spring.kaddem.entities.Etudiant;
-import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EtudiantServiceImplTest {
 
     @Mock
-    EtudiantRepository etudiantRepository;
+    private EtudiantRepository etudiantRepository;
 
     @InjectMocks
-    EtudiantServiceImpl etudiantService;
+    private EtudiantServiceImpl etudiantService;
 
     @Test
     @Order(1)
@@ -63,7 +64,7 @@ public class EtudiantServiceImplTest {
     @Order(3)
     public void testRetrieveAllEtudiants() {
         // Given
-        List<Etudiant> etudiantList = new ArrayList<Etudiant>() {
+        List<Etudiant> etudiantList = new ArrayList<>() {
             {
                 add(new Etudiant("Dupont", "Jean"));
                 add(new Etudiant("Martin", "Paul"));
