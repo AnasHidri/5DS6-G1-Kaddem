@@ -68,7 +68,14 @@ pipeline {
                 sh 'mvn test'
             }
         }*/
-    
+    stage('Grafana') {
+            steps {
+                script {
+                   sh 'docker start prometheus'
+                   sh 'docker start grafana'
+                }
+            }
+        }
     }
 
     post {
