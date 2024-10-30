@@ -4,6 +4,8 @@ pipeline {
         registry = "skander/kaddem"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
+        SONAR_HOST_URL = 'http://192.168.0.15:9000/'
+
     }
     agent any
 
@@ -29,7 +31,7 @@ pipeline {
 
         stage('MVN Sonarqube') {
             steps {
-                sh "mvn sonar:sonar -Dsonar.login=squ_72b9110e30030af808658c5223d0da89409e21cd"
+                sh "mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=squ_72b9110e30030af808658c5223d0da89409e21cd"
         }
         }
 
