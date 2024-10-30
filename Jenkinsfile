@@ -23,13 +23,13 @@ pipeline {
 
         stage('Build') {
             steps {
-               sh '/usr/bin/mvn clean install -DskipTests'
+               sh 'mvn clean install -DskipTests'
             }
         }
 
         stage('MVN Sonarqube') {
             steps {
-                sh "mvn sonar:sonar -Dsonar.login=squ_fa40c2d1d06efaab4703e54ed1250be63c41e7bf"
+                sh "mvn sonar:sonar -Dsonar.login=squ_72b9110e30030af808658c5223d0da89409e21cd"
         }
         }
 
