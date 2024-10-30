@@ -71,7 +71,7 @@ pipeline {
                     }
                 }*/
     
-    }
+
     stage('Grafana') {
                 steps {
                     script {
