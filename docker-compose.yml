@@ -13,6 +13,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
+
   kaddem-backend:
     depends_on:
       - mysqldb

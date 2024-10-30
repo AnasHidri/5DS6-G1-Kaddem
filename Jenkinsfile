@@ -62,7 +62,7 @@ pipeline {
                             sh 'docker-compose ps'
                         }
                     }
-         }
+        }
 
 
         /*stage('Test') {
