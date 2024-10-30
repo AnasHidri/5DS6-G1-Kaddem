@@ -38,6 +38,8 @@
             <version>${hibernate.version}</version> <!-- Using property for Hibernate version -->
             </dependency>
 
+
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
