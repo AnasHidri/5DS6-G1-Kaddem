@@ -4,7 +4,7 @@ pipeline {
         registry = "skander/kaddem"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
-        SONAR_HOST_URL = 'http://192.168.0.15:9000/'
+        SONAR_HOST_URL = 'http://192.168.0.14:9000/'
 
     }
     agent any
