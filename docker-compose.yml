@@ -12,7 +12,7 @@ services:
       - "3306:3306"
     volumes:
       - db:/var/lib/mysql
-    
+
   kaddem-backend:
     depends_on:
       - mysqldb
@@ -20,14 +20,12 @@ services:
     restart: on-failure
     ports:
       - "8082:8082"
-    stdin_open: true
-    tty: true
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/kaddemdb?useSSL=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/kaddem_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
 
 volumes:
   db:
