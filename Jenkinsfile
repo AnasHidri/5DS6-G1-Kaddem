@@ -98,7 +98,7 @@ pipeline {
                     <p style="color: #555;">Merci et félicitations !</p>
                 """,
                 mimeType: 'text/html',
-                to: 'nour.elghali@esprit.tn' // Remplace le Provider par l'email direct
+                to: 'nourghali2001@gmail.com' // Remplace le Provider par l'email direct
             )
         }
         failure {
@@ -115,7 +115,7 @@ pipeline {
                     <p style="color: #555;">Merci de vérifier les logs et résoudre les erreurs.</p>
                 """,
                 mimeType: 'text/html',
-                to: 'nour.elghali@esprit.tn' // Remplace le Provider par l'email direct
+                to: 'nourghali2001@gmail.com' // Remplace le Provider par l'email direct
             )
         }
     }
