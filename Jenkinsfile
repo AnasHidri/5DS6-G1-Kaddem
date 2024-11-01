@@ -83,40 +83,19 @@ pipeline {
 
         }
 
+
     post {
         success {
-            emailext(
-                subject: "✅ Pipeline succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    <h2 style="color: green;">✔️ Pipeline Successful</h2>
-                    <p>Le pipeline <strong>${env.JOB_NAME}</strong> a été exécuté avec succès.</p>
-                    <table style="border: 1px solid #ddd; border-collapse: collapse;">
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Job</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${env.JOB_NAME}</td></tr>
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Build</strong></td><td style="padding: 8px; border: 1px solid #ddd;">#${env.BUILD_NUMBER}</td></tr>
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>URL</strong></td><td style="padding: 8px; border: 1px solid #ddd;"><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
-                    </table>
-                    <p style="color: #555;">Merci et félicitations !</p>
-                """,
-                mimeType: 'text/html',
-                to: 'nourghali2001@gmail.com' // Remplace le Provider par l'email direct
-            )
+            echo 'Build finished successfully!'
+            mail to: 'nourghali2001@gmail.com',
+                 subject: "Jenkins Job Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Good news NADA! The job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has finished successfully."
         }
         failure {
-            emailext(
-                subject: "❌ Pipeline failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    <h2 style="color: red;">❌ Pipeline Failure</h2>
-                    <p>Le pipeline <strong>${env.JOB_NAME}</strong> a échoué.</p>
-                    <table style="border: 1px solid #ddd; border-collapse: collapse;">
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Job</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${env.JOB_NAME}</td></tr>
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Build</strong></td><td style="padding: 8px; border: 1px solid #ddd;">#${env.BUILD_NUMBER}</td></tr>
-                        <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>URL</strong></td><td style="padding: 8px; border: 1px solid #ddd;"><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
-                    </table>
-                    <p style="color: #555;">Merci de vérifier les logs et résoudre les erreurs.</p>
-                """,
-                mimeType: 'text/html',
-                to: 'nourghali2001@gmail.com' // Remplace le Provider par l'email direct
-            )
+            echo 'Build failed!'
+            mail to: 'nourghali2001@gmail.com',
+                 subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Sorry NADA ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
 
