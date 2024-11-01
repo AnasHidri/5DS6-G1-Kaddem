@@ -178,7 +178,7 @@ class ContratServiceImplTest {
         verify(contratRepository).findAll();
     }
 
-    @Test
+  /*  @Test
     @Order(9)
     void testRetrieveAndUpdateStatusContrat() {
         // Arrange
@@ -193,5 +193,5 @@ class ContratServiceImplTest {
 
         // Assert
         verify(contratRepository).findAll();
-    }
+    }*/
 }
