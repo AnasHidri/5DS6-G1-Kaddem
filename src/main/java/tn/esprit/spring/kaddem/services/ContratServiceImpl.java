@@ -16,100 +16,124 @@ import java.util.Set;
 
 @Slf4j
 @Service
-public class ContratServiceImpl implements IContratService{
-@Autowired
-ContratRepository contratRepository;
-@Autowired
-	EtudiantRepository etudiantRepository;
-	public List<Contrat> retrieveAllContrats(){
-		return (List<Contrat>) contratRepository.findAll();
-	}
+public class ContratServiceImpl implements IContratService {
+    @Autowired
+    private ContratRepository contratRepository;
+    
+    @Autowired
+    private EtudiantRepository etudiantRepository;
 
-	public Contrat updateContrat (Contrat  ce){
-		return contratRepository.save(ce);
-	}
+    public List<Contrat> retrieveAllContrats() {
+        return contratRepository.findAll();
+    }
 
-	public  Contrat addContrat (Contrat ce){
-		return contratRepository.save(ce);
-	}
+    public Contrat updateContrat(Contrat ce) {
+        if (ce == null) throw new RuntimeException("Contract cannot be null");
+        return contratRepository.save(ce);
+    }
 
-	public Contrat retrieveContrat (Integer  idContrat){
-		return contratRepository.findById(idContrat).orElse(null);
-	}
+    public Contrat addContrat(Contrat ce) {
+        if (ce == null) throw new RuntimeException("Contract cannot be null");
+        return contratRepository.save(ce);
+    }
 
-	public  void removeContrat(Integer idContrat){
-		Contrat c=retrieveContrat(idContrat);
-		contratRepository.delete(c);
-	}
+    public Contrat retrieveContrat(Integer idContrat) {
+        if (idContrat == null) throw new RuntimeException("Contract ID cannot be null");
+        return contratRepository.findById(idContrat)
+            .orElseThrow(() -> new RuntimeException("Contract not found with id: " + idContrat));
+    }
 
+    public void removeContrat(Integer idContrat) {
+        if (idContrat == null) throw new RuntimeException("Contract ID cannot be null");
+        Contrat c = retrieveContrat(idContrat);
+        contratRepository.delete(c);
+    }
 
+    public Contrat affectContratToEtudiant(Integer idContrat, String nomE, String prenomE) {
+        // Input validation
+        if (idContrat == null || nomE == null || prenomE == null) {
+            throw new RuntimeException("All parameters are required");
+        }
 
-	public Contrat affectContratToEtudiant (Integer idContrat, String nomE, String prenomE){
-		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
-		Contrat ce=contratRepository.findByIdContrat(idContrat);
-		Set<Contrat> contrats= e.getContrats();
-		Integer nbContratssActifs=0;
-		if (contrats.size()!=0) {
-			for (Contrat contrat : contrats) {
-				if (((contrat.getArchive())!=null)&& ((contrat.getArchive())!=false))  {
-					nbContratssActifs++;
-				}
-			}
-		}
-		if (nbContratssActifs<=4){
-		ce.setEtudiant(e);
-		contratRepository.save(ce);}
-		return ce;
-	}
-	public 	Integer nbContratsValides(Date startDate, Date endDate){
-		return contratRepository.getnbContratsValides(startDate, endDate);
-	}
+        // Retrieve contract and student
+        Contrat contrat = contratRepository.findByIdContrat(idContrat);
+        if (contrat == null) {
+            throw new RuntimeException("Contract not found with id: " + idContrat);
+        }
 
-	public void retrieveAndUpdateStatusContrat(){
-		List<Contrat>contrats=contratRepository.findAll();
-		List<Contrat>contrats15j=null;
-		List<Contrat>contratsAarchiver=null;
-		for (Contrat contrat : contrats) {
-			Date dateSysteme = new Date();
-			if (contrat.getArchive()==false) {
-				long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
-				long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
-				if (difference_In_Days==15){
-					contrats15j.add(contrat);
-					log.info(" Contrat : " + contrat);
-				}
-				if (difference_In_Days==0) {
-					contratsAarchiver.add(contrat);
-					contrat.setArchive(true);
-					contratRepository.save(contrat);
-				}
-			}
-		}
-	}
-	public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
-		float difference_In_Time = endDate.getTime() - startDate.getTime();
-		float difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
-		float difference_In_months =difference_In_Days/30;
-        List<Contrat> contrats=contratRepository.findAll();
-		float chiffreAffaireEntreDeuxDates=0;
-		for (Contrat contrat : contrats) {
-			if (contrat.getSpecialite()== Specialite.IA){
-				chiffreAffaireEntreDeuxDates+=(difference_In_months*300);
-			} else if (contrat.getSpecialite()== Specialite.CLOUD) {
-				chiffreAffaireEntreDeuxDates+=(difference_In_months*400);
-			}
-			else if (contrat.getSpecialite()== Specialite.RESEAUX) {
-				chiffreAffaireEntreDeuxDates+=(difference_In_months*350);
-			}
-			else //if (contrat.getSpecialite()== Specialite.SECURITE)
-			 {
-				 chiffreAffaireEntreDeuxDates+=(difference_In_months*450);
-			}
-		}
-		return chiffreAffaireEntreDeuxDates;
+        Etudiant etudiant = etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
+        if (etudiant == null) {
+            throw new RuntimeException("Student not found with name: " + nomE + " " + prenomE);
+        }
 
+        // Initialize contracts set if null
+        if (etudiant.getContrats() == null) {
+            etudiant.setContrats(new HashSet<>());
+        }
 
-	}
+        // Count active contracts
+        long activeContracts = etudiant.getContrats().stream()
+            .filter(c -> c.getArchive() != null && !c.getArchive())
+            .count();
 
+        if (activeContracts >= 5) {
+            throw new RuntimeException("Student already has maximum number of active contracts");
+        }
 
+        // Affect contract to student
+        contrat.setEtudiant(etudiant);
+        etudiant.getContrats().add(contrat);
+        
+        return contratRepository.save(contrat);
+    }
+
+    public Integer nbContratsValides(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null) {
+            throw new RuntimeException("Start and end dates are required");
+        }
+        return contratRepository.getnbContratsValides(startDate, endDate);
+    }
+
+    public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null) {
+            throw new RuntimeException("Start and end dates are required");
+        }
+
+        float differenceInDays = (endDate.getTime() - startDate.getTime()) / (1000.0f * 60 * 60 * 24);
+        float differenceInMonths = differenceInDays / 30.0f;
+
+        List<Contrat> contrats = contratRepository.findAll();
+        float chiffreAffaire = 0.0f;
+
+        for (Contrat contrat : contrats) {
+            float monthlyRate = switch (contrat.getSpecialite()) {
+                case IA -> 300;
+                case CLOUD -> 400;
+                case RESEAUX -> 350;
+                case SECURITE -> 450;
+            };
+            chiffreAffaire += (differenceInMonths * monthlyRate);
+        }
+
+        return chiffreAffaire;
+    }
+
+    public void retrieveAndUpdateStatusContrat() {
+        List<Contrat> contrats = contratRepository.findAll();
+        Date dateSysteme = new Date();
+
+        for (Contrat contrat : contrats) {
+            if (Boolean.FALSE.equals(contrat.getArchive())) {
+                long differenceInDays = (dateSysteme.getTime() - contrat.getDateFinContrat().getTime()) 
+                    / (1000 * 60 * 60 * 24);
+
+                if (differenceInDays == 15) {
+                    log.info("Contract approaching end date: {}", contrat);
+                } else if (differenceInDays >= 0) {
+                    contrat.setArchive(true);
+                    contratRepository.save(contrat);
+                }
+            }
+        }
+    }
 }

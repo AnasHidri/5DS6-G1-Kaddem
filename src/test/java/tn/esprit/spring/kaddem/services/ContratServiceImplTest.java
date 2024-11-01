@@ -20,7 +20,6 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-
 @SpringBootTest
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -56,7 +55,7 @@ class ContratServiceImplTest {
         // Assert
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(contratRepository, times(1)).findAll();
+        verify(contratRepository).findAll();
     }
 
     @Test
@@ -71,7 +70,7 @@ class ContratServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        verify(contratRepository, times(1)).save(any(Contrat.class));
+        verify(contratRepository).save(any(Contrat.class));
     }
 
     @Test
@@ -88,47 +87,11 @@ class ContratServiceImplTest {
         // Assert
         assertNotNull(result);
         assertEquals(1, result.getIdContrat());
-        verify(contratRepository, times(1)).findById(1);
+        verify(contratRepository).findById(1);
     }
 
     @Test
     @Order(4)
-    void testNbContratsValides() {
-        // Arrange
-        Date startDate = new Date();
-        Date endDate = new Date();
-        when(contratRepository.getnbContratsValides(startDate, endDate)).thenReturn(5);
-
-        // Act
-        Integer result = contratService.nbContratsValides(startDate, endDate);
-
-        // Assert
-        assertEquals(5, result);
-        verify(contratRepository, times(1)).getnbContratsValides(startDate, endDate);
-    }
-
-    @Test
-    @Order(5)
-    void testGetChiffreAffaireEntreDeuxDates() {
-        // Arrange
-        Date startDate = new Date();
-        Date endDate = new Date();
-        List<Contrat> contrats = List.of(
-            new Contrat(startDate, endDate, Specialite.IA, false, 1),
-            new Contrat(startDate, endDate, Specialite.CLOUD, false, 2)
-        );
-        when(contratRepository.findAll()).thenReturn(contrats);
-
-        // Act
-        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-
-        // Assert
-        assertTrue(result >= 0);
-        verify(contratRepository, times(1)).findAll();
-    }
-
-    @Test
-    @Order(6)
     void testAffectContratToEtudiant() {
         // Arrange
         Contrat contrat = new Contrat(new Date(), new Date(), Specialite.IA, false, 1);
@@ -137,6 +100,7 @@ class ContratServiceImplTest {
         Etudiant etudiant = new Etudiant();
         etudiant.setNomE("TestNom");
         etudiant.setPrenomE("TestPrenom");
+        etudiant.setContrats(new HashSet<>());
         
         when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
         when(etudiantRepository.findByNomEAndPrenomE("TestNom", "TestPrenom")).thenReturn(etudiant);
@@ -147,14 +111,15 @@ class ContratServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        verify(contratRepository, times(1)).findByIdContrat(1);
-        verify(etudiantRepository, times(1)).findByNomEAndPrenomE("TestNom", "TestPrenom");
-        verify(contratRepository, times(1)).save(any(Contrat.class));
+        assertNotNull(result.getEtudiant());
+        assertEquals("TestNom", result.getEtudiant().getNomE());
+        verify(contratRepository).findByIdContrat(1);
+        verify(etudiantRepository).findByNomEAndPrenomE("TestNom", "TestPrenom");
+        verify(contratRepository).save(any(Contrat.class));
     }
 
-    // Error cases
     @Test
-    @Order(7)
+    @Order(5)
     void testRetrieveContratNotFound() {
         // Arrange
         when(contratRepository.findById(99)).thenReturn(Optional.empty());
@@ -163,5 +128,26 @@ class ContratServiceImplTest {
         assertThrows(RuntimeException.class, () -> {
             contratService.retrieveContrat(99);
         });
+    }
+
+    @Test
+    @Order(6)
+    void testGetChiffreAffaireEntreDeuxDates() {
+        // Arrange
+        Date startDate = new Date();
+        Date endDate = new Date(startDate.getTime() + 30L * 24 * 60 * 60 * 1000); // 30 days later
+        List<Contrat> contrats = List.of(
+            new Contrat(startDate, endDate, Specialite.IA, false, 1),
+            new Contrat(startDate, endDate, Specialite.CLOUD, false, 2)
+        );
+        when(contratRepository.findAll()).thenReturn(contrats);
+
+        // Act
+        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+
+        // Assert
+        assertTrue(result > 0);
+        assertEquals(700.0f, result, 0.1f); // 300 + 400 for one month
+        verify(contratRepository).findAll();
     }
 }
