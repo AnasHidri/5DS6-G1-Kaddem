@@ -84,11 +84,39 @@ pipeline {
         }
 
     post {
-        success {
-            echo 'Build finished successfully!'
-        }
-        failure {
-            echo 'Build failed!'
+            success {
+                emailext(
+                    subject: "✅ Pipeline succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+                        <h2 style="color: green;">✔️ Pipeline Successful</h2>
+                        <p>Le pipeline <strong>${env.JOB_NAME}</strong> a été exécuté avec succès.</p>
+                        <table style="border: 1px solid #ddd; border-collapse: collapse;">
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Job</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${env.JOB_NAME}</td></tr>
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Build</strong></td><td style="padding: 8px; border: 1px solid #ddd;">#${env.BUILD_NUMBER}</td></tr>
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>URL</strong></td><td style="padding: 8px; border: 1px solid #ddd;"><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
+                        </table>
+                        <p style="color: #555;">Merci et félicitations !</p>
+                    """,
+                    mimeType: 'text/html',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                )
+            }
+            failure {
+                emailext(
+                    subject: "❌ Pipeline failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+                        <h2 style="color: red;">❌ Pipeline Failure</h2>
+                        <p>Le pipeline <strong>${env.JOB_NAME}</strong> a échoué.</p>
+                        <table style="border: 1px solid #ddd; border-collapse: collapse;">
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Job</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${env.JOB_NAME}</td></tr>
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Build</strong></td><td style="padding: 8px; border: 1px solid #ddd;">#${env.BUILD_NUMBER}</td></tr>
+                            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>URL</strong></td><td style="padding: 8px; border: 1px solid #ddd;"><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
+                        </table>
+                        <p style="color: #555;">Merci de vérifier les logs et résoudre les erreurs.</p>
+                    """,
+                    mimeType: 'text/html',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                )
+            }
         }
     }
-}
