@@ -65,11 +65,11 @@ pipeline {
             }
         }
 
-        /*stage('Test') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
-        }*/
+        }
 
                stage('Grafana') {
             steps {
@@ -93,7 +93,7 @@ pipeline {
             echo 'Build failed!'
             mail to: 'anashidri36@gmail.com',
                  subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "Sorry NADA ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
+                 body: "Sorry Si anas ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
 }
