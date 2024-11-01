@@ -42,7 +42,7 @@ pipeline {
                 sh 'mvn deploy -DskipTests=true'
             }
         }
-        stage('Building our image') {
+     /*   stage('Building our image') {
             steps {
                 script {
                     dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
@@ -78,7 +78,7 @@ pipeline {
                 }
             }
         }
-    
+    */
     }
 
   post {
