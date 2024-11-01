@@ -10,6 +10,8 @@ import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
+import org.springframework.test.context.ActiveProfiles;
+
 
 import java.util.ArrayList;
 import java.util.Date;
