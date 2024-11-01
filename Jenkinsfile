@@ -31,6 +31,11 @@ pipeline {
         }
         }
 
+        stage('Test') {
+                    steps {
+                        sh 'mvn test'
+                    }
+                }
             stage('Deploy') {
             steps {
                 // Commande pour déployer avec l'option de skipper les tests
@@ -62,12 +67,6 @@ pipeline {
                     // Verify deployment
                     sh 'docker-compose ps'
                 }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
             }
         }
 
