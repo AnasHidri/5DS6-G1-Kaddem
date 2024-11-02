@@ -82,9 +82,15 @@ pipeline {
     post {
         success {
             echo 'Build finished successfully!'
+            mail to: 'ouailiwajdi2@gmail.com',
+                 subject: "Jenkins Job Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Good news Si wajdi wallah maalem ! The job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has finished successfully."
         }
         failure {
             echo 'Build failed!'
+            mail to: 'ouailiwajdi2@gmail.com',
+                 subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Yaa ltif Si wajdi mech menek rahou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
 }
