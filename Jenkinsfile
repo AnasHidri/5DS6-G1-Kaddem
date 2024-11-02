@@ -96,7 +96,7 @@ post {
         }
         failure {
             echo 'Build failed!'
-            mail to: 'anada.aissaoui@gmail.com',
+            mail to: 'nada.aissaoui@gmail.com',
                  subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                  body: "OOPS it's (skander's , anas's or wajdi's ) fault ! Sorry Nadou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
