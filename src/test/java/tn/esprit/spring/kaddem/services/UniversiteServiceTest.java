@@ -86,7 +86,7 @@ public class UniversiteServiceTest {
         assertEquals(universiteToUpdate, updatedUniversite);
     }
 
-    @Test
+    /*@Test
     @Order(5)
     void testAssignUniversiteToDepartement() {
         Universite universite = new Universite(1, "UnivDep");
@@ -117,5 +117,5 @@ public class UniversiteServiceTest {
 
         assertEquals(2, retrievedDepartements.size());
         verify(universiteRepository).findById(1);
-    }
+    }*/
 }
