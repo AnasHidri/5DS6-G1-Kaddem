@@ -93,4 +93,4 @@ pipeline {
                  body: "Yaa ltif Si wajdi mech menek rahou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
-}
+}  
