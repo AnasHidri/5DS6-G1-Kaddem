@@ -41,7 +41,7 @@ pipeline {
                 sh 'mvn test'
             }
         }
-       /* stage('Building our image') {
+       stage('Building our image') {
             steps {
                 script {
                     dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
@@ -76,7 +76,7 @@ pipeline {
                    sh 'docker start grafana'
                 }
             }
-        }*/
+        }
     }
 
     post {
