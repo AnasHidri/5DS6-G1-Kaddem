@@ -2,26 +2,28 @@ package tn.esprit.spring.kaddem.services;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Equipe;
+import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class) // Initialisation des mocks pour JUnit 5
 public class EquipeServiceImplTest {
-    @Mock
-    tn.esprit.spring.kaddem.repositories.EquipeRepository EquipeRepository;
 
+    @Mock
+    private EquipeRepository equipeRepository; // Nom en camelCase
 
     @InjectMocks
-    EquipeServiceImpl equipeService;
+    private EquipeServiceImpl equipeService; // Nom en camelCase
 
     @Test
     @Order(1)
@@ -30,54 +32,51 @@ public class EquipeServiceImplTest {
         Equipe equipe = new Equipe("Ca");
         equipe.setIdEquipe(1);
 
-        when(EquipeRepository.findById(1)).thenReturn(Optional.of(equipe));
+        when(equipeRepository.findById(1)).thenReturn(Optional.of(equipe));
 
         // When
         Equipe retrievedEquipe = equipeService.retrieveEquipe(1);
 
         // Then
-        assertNotNull(retrievedEquipe);
-        assertEquals(equipe, retrievedEquipe);
+        assertNotNull(retrievedEquipe, "L'équipe récupérée ne doit pas être null");
+        assertEquals(equipe, retrievedEquipe, "L'équipe récupérée doit correspondre à celle mockée");
     }
 
     @Test
     @Order(2)
     public void testAddEquipe() {
         // Given
-        Equipe EquipeToAdd = new Equipe("Ca");
+        Equipe equipeToAdd = new Equipe("Ca");
 
-        when(EquipeRepository.save(EquipeToAdd)).thenReturn(EquipeToAdd);
+        when(equipeRepository.save(equipeToAdd)).thenReturn(equipeToAdd);
 
         // When
-        Equipe addedEquipe = equipeService.addEquipe(EquipeToAdd);
+        Equipe addedEquipe = equipeService.addEquipe(equipeToAdd);
 
         // Then
-        verify(EquipeRepository, times(1)).save(EquipeToAdd);
-        assertNotNull(addedEquipe);
-        assertEquals(EquipeToAdd, addedEquipe);
+        verify(equipeRepository, times(1)).save(equipeToAdd);
+        assertNotNull(addedEquipe, "L'équipe ajoutée ne doit pas être null");
+        assertEquals(equipeToAdd, addedEquipe, "L'équipe ajoutée doit correspondre à celle mockée");
     }
-
 
     @Test
     @Order(3)
-    public void testRetrieveAllTest() {
-        List<Equipe> Equipelist = new ArrayList<Equipe>() {
+    public void testRetrieveAllEquipes() {
+        // Given
+        List<Equipe> equipeList = new ArrayList<>();
+        equipeList.add(new Equipe("Ca"));
+        equipeList.add(new Equipe("EST"));
+        equipeList.add(new Equipe("ESS"));
+        equipeList.add(new Equipe("CAB"));
 
-            {
-                add(new Equipe("Ca"));
-                add(new Equipe("EST"));
-                add(new Equipe("ESS"));
-                add(new Equipe("CAB"));
+        when(equipeRepository.findAll()).thenReturn(equipeList);
 
-            }
-        };
-        when(equipeService.retrieveAllEquipes()).thenReturn(Equipelist);
-        List<Equipe> equipeList = equipeService.retrieveAllEquipes();
-        assertEquals(4, equipeList.size());
-        System.out.println("All Equipe Retrieved succefully...!!");
+        // When
+        List<Equipe> result = equipeService.retrieveAllEquipes();
+
+        // Then
+        assertNotNull(result, "La liste des équipes ne doit pas être null");
+        assertEquals(4, result.size(), "La taille de la liste des équipes doit être de 4");
+        System.out.println("All Equipes retrieved successfully!");
     }
-
 }
-
-
-
