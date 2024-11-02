@@ -37,6 +37,21 @@ pipeline {
                         sh 'mvn test'
                     }
          }
+
+         stage('Trivy Image Scans') {
+             steps {
+                 script {
+                     // Scanner l'image de l'application principale
+                     sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${registry}:${RELEASE_VERSION}"
+
+                     // Scanner l'image de SonarQube
+                     sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image sonarqube:latest"
+
+                     // Scanner l'image de Nexus
+                     //sh "docker run --
+
+
+
         stage('Deploy') {
                     steps {
                         // Commande pour déployer avec l'option de skipper les tests
