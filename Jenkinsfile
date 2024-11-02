@@ -38,20 +38,7 @@ pipeline {
                                sh 'mvn test'
                            }
                        }
-        stage('Trivy Image Scans') {
-            steps {
-                script {
-                    // Scanner l'image de l'application principale
-                    sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${registry}:${RELEASE_VERSION}"
 
-                    // Scanner l'image de SonarQube
-                    sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image sonarqube:latest"
-
-                    // Scanner l'image de Nexus
-                    //sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image sonatype/nexus3:latest"
-                }
-            }
-        }
 
 
         stage('Deploy') {
@@ -112,7 +99,7 @@ post {
             echo 'Build failed!'
             mail to: 'nada.aissaoui@gmail.com',
                  subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "OOPS it's (skander's , anas's or wajdi's ) fault ! Sorry Nadou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
+                 body: "OOPS it's (skander's or anas's ) fault ! Sorry Nadou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
 
