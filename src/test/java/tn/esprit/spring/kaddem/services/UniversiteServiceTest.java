@@ -3,11 +3,8 @@ package tn.esprit.spring.kaddem.services;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
@@ -23,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UniversiteServiceTest {
 
@@ -36,11 +32,6 @@ public class UniversiteServiceTest {
     @InjectMocks
     private UniversiteServiceImpl universiteService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     @Order(1)
     void testRetrieveUniversite() {
@@ -52,8 +43,6 @@ public class UniversiteServiceTest {
         assertNotNull(retrievedUniversite);
         assertEquals(universite, retrievedUniversite);
         verify(universiteRepository).findById(1);
-
-        System.out.println("University Retrieve processed successfully...!!");
     }
 
     @Test
@@ -67,8 +56,6 @@ public class UniversiteServiceTest {
         verify(universiteRepository).save(universiteToAdd);
         assertNotNull(addedUniversite);
         assertEquals(universiteToAdd, addedUniversite);
-
-        System.out.println("University added successfully...!!");
     }
 
     @Test
@@ -85,8 +72,6 @@ public class UniversiteServiceTest {
         assertFalse(allUniversities.isEmpty());
         assertEquals(3, allUniversities.size());
         verify(universiteRepository).findAll();
-
-        System.out.println("All Universities Retrieve processed successfully...!!");
     }
 
     @Test
@@ -99,8 +84,6 @@ public class UniversiteServiceTest {
 
         verify(universiteRepository).save(universiteToUpdate);
         assertEquals(universiteToUpdate, updatedUniversite);
-
-        System.out.println("University updated successfully...!!");
     }
 
     @Test
