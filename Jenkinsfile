@@ -49,7 +49,9 @@ pipeline {
 
                      // Scanner l'image de Nexus
                      //sh "docker run --
-
+                 }
+              }
+            }
 
 
         stage('Deploy') {
