@@ -9,7 +9,7 @@ pipeline {
 
     triggers {
         
-        pollSCM('H/5 * * * *') 
+        githubPush() 
     }
     stages {
         stage('Checkout') {
@@ -36,7 +36,12 @@ pipeline {
                 sh 'mvn deploy  -DskipTests=true'
             }
         }
-        stage('Building our image') {
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+       /* stage('Building our image') {
             steps {
                 script {
                     dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
@@ -63,11 +68,7 @@ pipeline {
         }
 
 
-        /*stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }*/
+        
     stage('Grafana') {
             steps {
                 script {
@@ -75,7 +76,7 @@ pipeline {
                    sh 'docker start grafana'
                 }
             }
-        }
+        }*/
     }
 
     post {

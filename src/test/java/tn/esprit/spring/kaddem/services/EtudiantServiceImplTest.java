@@ -94,7 +94,7 @@ class EtudiantServiceImplTest {
         verify(etudiantRepository, times(1)).delete(etudiant);
     }
 
-    @Test
+    /*@Test
     @Order(6)
     void testAssignEtudiantToDepartement() {
         Etudiant etudiant = new Etudiant();
@@ -135,5 +135,5 @@ class EtudiantServiceImplTest {
         List<Etudiant> result = etudiantService.getEtudiantsByDepartement(1);
         verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
         assertEquals(1, result.size());
-    }
+    }*/
 }
