@@ -78,7 +78,7 @@ pipeline {
             }
         }
     }
-
+//ya rabiii 
     post {
         success {
             echo 'Build finished successfully!'
