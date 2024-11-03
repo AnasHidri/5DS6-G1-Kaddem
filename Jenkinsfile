@@ -38,7 +38,7 @@ pipeline {
                     }
          }
 
-        
+
 
         stage('Deploy') {
                     steps {
@@ -94,30 +94,31 @@ pipeline {
 
 
     post {
-        success {
-            echo '🎉 Build finished successfully!'
-            mail to: 'nourghali2001@gmail.com',
-                 subject: "✅ Jenkins Job Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: """Hello Nour,
+           success {
+               echo '🎉 Build finished successfully!'
+               mail to: 'nourghali2001@gmail.com',
+                    subject: "✅ Jenkins Job Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                    body: """Hello Nour,
 
-    Good news! The job '${env.JOB_NAME}' [#${env.BUILD_NUMBER}] has completed successfully.
+       Good news! The job '${env.JOB_NAME}' [#${env.BUILD_NUMBER}] has completed successfully.
 
-    Best regards,
-    Jenkins 🎉"""
-        }
-        failure {
-            echo '❌ Build failed!'
-            mail to: 'nourghali2001@gmail.com',
-                 subject: "❗ Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: """Hello Nour,
+       Best regards,
+       Jenkins 🎉"""
+           }
+           failure {
+               echo '❌ Build failed!'
+               mail to: 'nourghali2001@gmail.com',
+                    subject: "❗ Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                    body: """Hello Nour,
 
-    Unfortunately, the job '${env.JOB_NAME}' [#${env.BUILD_NUMBER}] has failed.
+       Unfortunately, the job '${env.JOB_NAME}' [#${env.BUILD_NUMBER}] has failed.
 
-    Please check the Jenkins console output for more details and troubleshooting.
+       Please check the Jenkins console output for more details and troubleshooting.
 
-    Best regards,
-    Jenkins ❌"""
-        }
-    }
+       Best regards,
+       Jenkins ❌"""
+           }
+       }
 
+       }
     }
