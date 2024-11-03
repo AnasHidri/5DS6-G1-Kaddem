@@ -28,11 +28,13 @@ pipeline {
             }
         }
 
-        stage('MVN Sonarqube') {
-       steps {
+       stage('MVN Sonarqube') {
+        steps {
            sh "mvn sonar:sonar -Dsonar.host.url=http://192.168.1.22:9000 -Dsonar.login=squ_ba3705efb7ebf90d320df79fcfab3367e9322dd2"
+         }
        }
-       }
+
+
         stage('Test') {
                            steps {
                                sh 'mvn test'
@@ -47,7 +49,7 @@ pipeline {
                     }
         }
 
-       /*  stage('Building our image') {
+        stage('Building our image') {
                     steps {
                         script {
                             dockerImage = docker.build "${registry}:${RELEASE_VERSION}"
@@ -55,6 +57,7 @@ pipeline {
                         }
                     }
                 }
+
         stage('Deploy with Docker Compose') {
                     steps {
                         script {
@@ -84,7 +87,7 @@ pipeline {
                        sh 'docker start grafana'
                     }
                 }
-            }*/
+            }
 
         }
 
@@ -99,7 +102,7 @@ post {
             echo 'Build failed!'
             mail to: 'nada.aissaoui@gmail.com',
                  subject: "Jenkins Job Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "OOPS it's (skander's or anas's ) fault ! Sorry Nadou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
+                 body: "OOPS it's (skander's or anas's )fault ! Sorry Nadou ,the job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please check the Jenkins console output for details."
         }
     }
 
