@@ -51,11 +51,6 @@ pipeline {
             }
         }
 
-        stage('Push Image to Docker Hub') {
-            steps {
-                sh "docker push ${registry}:${RELEASE_VERSION}"
-            }
-        }
 
         stage('Deploy with Docker Compose') {
             steps {
