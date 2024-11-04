@@ -49,13 +49,13 @@ public class EquipeServiceImpl implements IEquipeService{
 				Integer nbEtudiantsAvecContratsActifs=0;
 				for (Etudiant etudiant : etudiants) {
 					Set<Contrat> contrats = etudiant.getContrats();
-					//Set<Contrat> contratsActifs=null;
+
 					for (Contrat contrat : contrats) {
 						Date dateSysteme = new Date();
 						long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
 						long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));
 						if ((contrat.getArchive() == false) && (difference_In_Years > 1)) {
-							//	contratsActifs.add(contrat);
+
 							nbEtudiantsAvecContratsActifs++;
 							break;
 						}

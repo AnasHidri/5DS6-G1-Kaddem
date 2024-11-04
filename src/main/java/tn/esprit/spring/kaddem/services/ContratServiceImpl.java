@@ -101,7 +101,7 @@ ContratRepository contratRepository;
 			else if (contrat.getSpecialite()== Specialite.RESEAUX) {
 				chiffreAffaireEntreDeuxDates+=(difference_In_months*350);
 			}
-			else //if (contrat.getSpecialite()== Specialite.SECURITE)
+			else
 			 {
 				 chiffreAffaireEntreDeuxDates+=(difference_In_months*450);
 			}
