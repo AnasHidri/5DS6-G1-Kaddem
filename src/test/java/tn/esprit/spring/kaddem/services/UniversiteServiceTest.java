@@ -24,10 +24,10 @@ import static org.mockito.Mockito.*;
 public class UniversiteServiceTest {
 
     @Mock
-    UniversiteRepository universiteRepository;
+    private UniversiteRepository universiteRepository;
 
     @Mock
-    DepartementRepository departementRepository;
+    private DepartementRepository departementRepository;
 
     @InjectMocks
     private UniversiteServiceImpl universiteService;
@@ -40,9 +40,9 @@ public class UniversiteServiceTest {
 
         Universite retrievedUniversite = universiteService.retrieveUniversite(1);
 
-        assertNotNull(retrievedUniversite);
-        assertEquals(universite, retrievedUniversite);
-        verify(universiteRepository).findById(1);
+        assertNotNull(retrievedUniversite, "The retrieved Universite should not be null");
+        assertEquals(universite, retrievedUniversite, "The retrieved Universite should match the expected Universite");
+        verify(universiteRepository, times(1)).findById(1);
     }
 
     @Test
@@ -53,9 +53,9 @@ public class UniversiteServiceTest {
 
         Universite addedUniversite = universiteService.addUniversite(universiteToAdd);
 
-        verify(universiteRepository).save(universiteToAdd);
-        assertNotNull(addedUniversite);
-        assertEquals(universiteToAdd, addedUniversite);
+        verify(universiteRepository, times(1)).save(universiteToAdd);
+        assertNotNull(addedUniversite, "The added Universite should not be null");
+        assertEquals(universiteToAdd, addedUniversite, "The added Universite should match the input Universite");
     }
 
     @Test
@@ -69,9 +69,10 @@ public class UniversiteServiceTest {
 
         List<Universite> allUniversities = universiteService.retrieveAllUniversites();
 
-        assertFalse(allUniversities.isEmpty());
-        assertEquals(3, allUniversities.size());
-        verify(universiteRepository).findAll();
+        assertNotNull(allUniversities, "The list of universities should not be null");
+        assertFalse(allUniversities.isEmpty(), "The list of universities should not be empty");
+        assertEquals(3, allUniversities.size(), "The list should contain 3 universities");
+        verify(universiteRepository, times(1)).findAll();
     }
 
     @Test
@@ -82,11 +83,11 @@ public class UniversiteServiceTest {
 
         Universite updatedUniversite = universiteService.updateUniversite(universiteToUpdate);
 
-        verify(universiteRepository).save(universiteToUpdate);
-        assertEquals(universiteToUpdate, updatedUniversite);
+        verify(universiteRepository, times(1)).save(universiteToUpdate);
+        assertEquals(universiteToUpdate, updatedUniversite, "The updated Universite should match the input Universite");
     }
 
-    /*@Test
+/*    @Test
     @Order(5)
     void testAssignUniversiteToDepartement() {
         Universite universite = new Universite(1, "UnivDep");
@@ -97,8 +98,8 @@ public class UniversiteServiceTest {
 
         universiteService.assignUniversiteToDepartement(1, 2);
 
-        verify(universiteRepository).save(universite);
-        assertEquals(1, universite.getDepartements().size());
+        verify(universiteRepository, times(1)).save(universite);
+        assertTrue(universite.getDepartements().contains(departement), "The Universite should contain the assigned Departement");
     }
 
     @Test
@@ -108,14 +109,14 @@ public class UniversiteServiceTest {
         Departement departement1 = new Departement(2, "Info");
         Departement departement2 = new Departement(3, "Tech");
 
-        universite.getDepartements().add(departement1);
-        universite.getDepartements().add(departement2);
+        universite.getDepartements().addAll(Arrays.asList(departement1, departement2));
 
         when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
 
         Set<Departement> retrievedDepartements = universiteService.retrieveDepartementsByUniversite(1);
 
-        assertEquals(2, retrievedDepartements.size());
-        verify(universiteRepository).findById(1);
+        assertNotNull(retrievedDepartements, "The set of retrieved departements should not be null");
+        assertEquals(2, retrievedDepartements.size(), "The set should contain 2 departements");
+        verify(universiteRepository, times(1)).findById(1);
     }*/
 }
