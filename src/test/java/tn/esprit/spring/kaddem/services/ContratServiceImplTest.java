@@ -178,20 +178,4 @@ class ContratServiceImplTest {
         verify(contratRepository).findAll();
     }
 
-  /*  @Test
-    @Order(9)
-    void testRetrieveAndUpdateStatusContrat() {
-        // Arrange
-        List<Contrat> contrats = new ArrayList<>();
-        Contrat contrat = new Contrat(new Date(), new Date(), Specialite.IA, false, 1);
-        contrats.add(contrat);
-        when(contratRepository.findAll()).thenReturn(contrats);
-        when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
-
-        // Act
-        contratService.retrieveAndUpdateStatusContrat();
-
-        // Assert
-        verify(contratRepository).findAll();
-    }*/
 }
