@@ -6,7 +6,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
@@ -14,7 +13,6 @@ import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -87,36 +85,4 @@ public class UniversiteServiceTest {
         assertEquals(universiteToUpdate, updatedUniversite, "The updated Universite should match the input Universite");
     }
 
-/*    @Test
-    @Order(5)
-    void testAssignUniversiteToDepartement() {
-        Universite universite = new Universite(1, "UnivDep");
-        Departement departement = new Departement(2, "Informatique");
-
-        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
-        when(departementRepository.findById(2)).thenReturn(Optional.of(departement));
-
-        universiteService.assignUniversiteToDepartement(1, 2);
-
-        verify(universiteRepository, times(1)).save(universite);
-        assertTrue(universite.getDepartements().contains(departement), "The Universite should contain the assigned Departement");
-    }
-
-    @Test
-    @Order(6)
-    void testRetrieveDepartementsByUniversite() {
-        Universite universite = new Universite(1, "UnivDep");
-        Departement departement1 = new Departement(2, "Info");
-        Departement departement2 = new Departement(3, "Tech");
-
-        universite.getDepartements().addAll(Arrays.asList(departement1, departement2));
-
-        when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
-
-        Set<Departement> retrievedDepartements = universiteService.retrieveDepartementsByUniversite(1);
-
-        assertNotNull(retrievedDepartements, "The set of retrieved departements should not be null");
-        assertEquals(2, retrievedDepartements.size(), "The set should contain 2 departements");
-        verify(universiteRepository, times(1)).findById(1);
-    }*/
 }
