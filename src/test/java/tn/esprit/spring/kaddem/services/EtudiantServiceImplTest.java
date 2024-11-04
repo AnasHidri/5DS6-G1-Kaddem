@@ -4,9 +4,9 @@ import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.entities.Departement;
-import tn.esprit.spring.kaddem.entities.Equipe;
+
+
+
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
@@ -94,46 +94,5 @@ class EtudiantServiceImplTest {
         verify(etudiantRepository, times(1)).delete(etudiant);
     }
 
-    /*@Test
-    @Order(6)
-    void testAssignEtudiantToDepartement() {
-        Etudiant etudiant = new Etudiant();
-        Departement departement = new Departement();
-
-        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
-        when(departementRepository.findById(1)).thenReturn(Optional.of(departement));
-
-        etudiantService.assignEtudiantToDepartement(1, 1);
-        verify(etudiantRepository, times(1)).save(etudiant);
-        assertEquals(departement, etudiant.getDepartement());
-    }
-
-    @Test
-    @Order(7)
-    void testAddAndAssignEtudiantToEquipeAndContract() {
-        Etudiant etudiant = new Etudiant();
-        Contrat contrat = new Contrat();
-        Equipe equipe = new Equipe();
-
-        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
-        when(equipeRepository.findById(1)).thenReturn(Optional.of(equipe));
-
-        Etudiant result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 1);
-        
-        assertEquals(etudiant, contrat.getEtudiant());
-        assertTrue(equipe.getEtudiants().contains(etudiant));
-        assertEquals(etudiant, result);
-    }
-
-    @Test
-    @Order(8)
-    void testGetEtudiantsByDepartement() {
-        List<Etudiant> etudiants = new ArrayList<>();
-        etudiants.add(new Etudiant());
-        when(etudiantRepository.findEtudiantsByDepartement_IdDepart(1)).thenReturn(etudiants);
-
-        List<Etudiant> result = etudiantService.getEtudiantsByDepartement(1);
-        verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
-        assertEquals(1, result.size());
-    }*/
+    
 }
