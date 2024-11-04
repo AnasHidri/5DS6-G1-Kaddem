@@ -8,7 +8,7 @@ pipeline {
     agent any
 
     triggers {
-        // pollSCM('H/5 * * * *')
+         pollSCM('H/5 * * * *')
         // githubPush()
     }
 
