@@ -24,18 +24,21 @@ pipeline {
                sh 'mvn clean install -DskipTests'
             }
         }
+        stage('Test') {
+                    steps {
+                        sh 'mvn test'
+                    }
+                }
+
 
         stage('SONARQUBE') {
             steps {
+               sh 'mvn test jacoco:report'
                sh "mvn sonar:sonar -Dsonar.host.url=http://192.168.1.22:9000 -Dsonar.login=squ_ba3705efb7ebf90d320df79fcfab3367e9322dd2"
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
+
 
         stage('Upload to Nexus (Deploy)') {
             steps {
@@ -84,7 +87,7 @@ pipeline {
             echo 'Build finished successfully!'
             mail to: 'nada.aissaoui@gmail.com',
                  subject: "Jenkins Job Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "Good news Nadou! The job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has finished successfully."
+                 body: "Good news Nadou The job ${env.JOB_NAME} [${env.BUILD_NUMBER}] has finished successfully."
         }
         failure {
             echo 'Build failed!'
