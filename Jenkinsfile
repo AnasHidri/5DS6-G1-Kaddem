@@ -38,7 +38,7 @@ pipeline {
         }
 
    
-            stage('Deploy') {
+      /*      stage('Deploy') {
             steps {
                 // Commande pour déployer avec l'option de skipper les tests
                 sh 'mvn deploy -DskipTests=true'
@@ -79,7 +79,7 @@ pipeline {
                    sh 'docker start grafana'
                 }
             }
-        }
+        }*/
     
     }
 
