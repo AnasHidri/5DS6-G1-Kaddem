@@ -63,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
             }
         };
-        when(departementService.retrieveAllDepartements()).thenReturn(Departementlist);
+        when(departementService.retrieveAllDepartements()).thenReturn(departementlist);
         List<Departement> departementlist = departementService.retrieveAllDepartements();
         assertEquals(4, departementlist.size());
         System.out.println("All departements Retrieved succefully...!!");
