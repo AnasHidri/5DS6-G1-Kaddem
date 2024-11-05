@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 
- class DepartementServiceImpltest {
+class DepartementServiceImplTest  {
     @Mock
     DepartementRepository departementRepository;
     @InjectMocks
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @Order(1)
 
-    public void testRetrieveDepartement() {
+    void testRetrieveDepartement() {
 
         Departement departement = new Departement(1, "departement1");
         departement.setIdDepart(1);
@@ -52,8 +52,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     @Order(2)
-    public void testRetrieveAllDepartementTest() {
-        List<Departement> Departementlist = new ArrayList<Departement>() {
+    void testRetrieveAllDepartementTest() {
+        List<Departement> mockDepartementList  = new ArrayList<Departement>() {
 
             {
                 add(new Departement(2, "departement2"));
@@ -63,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
             }
         };
-        when(departementService.retrieveAllDepartements()).thenReturn(Departementlist);
+        when(departementService.retrieveAllDepartements()).thenReturn(mockDepartementList );
         List<Departement> departementlist = departementService.retrieveAllDepartements();
         assertEquals(4, departementlist.size());
         System.out.println("All departements Retrieved succefully...!!");
@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @Order(3)
 
-    public void testaddDepartement() {
+    void testaddDepartement() {
 
         Departement departementadd = new Departement(1, "departement1");
         when(departementRepository.save(departementadd)).thenReturn(departementadd);
