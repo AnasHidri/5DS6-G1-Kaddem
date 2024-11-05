@@ -61,7 +61,7 @@ class EquipeServiceImplTest {
 
     @Test
     @Order(3)
-    public void testRetrieveAllEquipes() {
+     void testRetrieveAllEquipes() {
         // Given
         List<Equipe> equipeList = new ArrayList<>();
         equipeList.add(new Equipe("Ca"));
