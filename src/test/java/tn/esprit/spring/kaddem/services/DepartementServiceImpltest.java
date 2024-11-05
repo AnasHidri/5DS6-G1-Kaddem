@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @Order(2)
     void testRetrieveAllDepartementTest() {
-        List<Departement> departementlist = new ArrayList<Departement>() {
+        List<Departement> mockDepartementList  = new ArrayList<Departement>() {
 
             {
                 add(new Departement(2, "departement2"));
@@ -63,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
             }
         };
-        when(departementService.retrieveAllDepartements()).thenReturn(departementlist);
+        when(departementService.retrieveAllDepartements()).thenReturn(mockDepartementList );
         List<Departement> departementlist = departementService.retrieveAllDepartements();
         assertEquals(4, departementlist.size());
         System.out.println("All departements Retrieved succefully...!!");
@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @Order(3)
 
-    void testaddDepartement() {
+     void testaddDepartement() {
 
         Departement departementadd = new Departement(1, "departement1");
         when(departementRepository.save(departementadd)).thenReturn(departementadd);
