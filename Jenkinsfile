@@ -27,17 +27,20 @@ pipeline {
             }
         }
 
+        stage('Test') {
+                            steps {
+                                sh 'mvn test'
+                            }
+                 }
+
+
         stage('MVN Sonarqube') {
             steps {
+                sh 'mvn test jacoco:report'
                 sh "mvn sonar:sonar -Dsonar.login=squ_93579bd9fc8bb68995c067e8a7a60400edfed1ab"
         }
         }
 
-        stage('Test') {
-                    steps {
-                        sh 'mvn test'
-                    }
-         }
 
 
 
@@ -76,11 +79,7 @@ pipeline {
             }
         }
 
-        /*stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }*/
+
 
        stage('Grafana') {
                 steps {
