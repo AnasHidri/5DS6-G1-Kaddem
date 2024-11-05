@@ -10,7 +10,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  app-kaddem:
+  app-foyer:
     depends_on:
       - mysqldb
     image: Gannouni02/kaddem:1.0.0
