@@ -76,6 +76,11 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version>
+        </dependency>
 
 
     </dependencies>
@@ -85,6 +90,7 @@
             <name>Nexus Repository</name>
             <url>http://192.168.1.50:8081/repository/maven-releases/</url>
         </repository>
+        
         <snapshotRepository>
             <id>deploymentSnapshotRepo</id>
             <name>Nexus Snapshot Repository</name>
