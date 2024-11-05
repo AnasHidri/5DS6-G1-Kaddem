@@ -24,6 +24,11 @@ pipeline {
                sh 'mvn clean install -DskipTests'
             }
         }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
 
         stage('MVN Sonarqube') {
             steps {
@@ -39,11 +44,7 @@ pipeline {
                 sh 'mvn deploy  -DskipTests=true'
             }
         }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
+        
        stage('Building our image') {
             steps {
                 script {
