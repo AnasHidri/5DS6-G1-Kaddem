@@ -37,6 +37,8 @@ pipeline {
 
         stage('MVN Sonarqube') {
             steps {
+
+                sh 'mvn test jacoco:report'
                 sh "mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=squ_51ab882c903d276337dc9d5b0b32bd6de2e7046b"
         }
         }

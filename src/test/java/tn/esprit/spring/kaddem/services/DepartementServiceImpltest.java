@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 
-public class DepartementServiceImpltest {
+ class DepartementServiceImpltest {
     @Mock
     DepartementRepository departementRepository;
     @InjectMocks
