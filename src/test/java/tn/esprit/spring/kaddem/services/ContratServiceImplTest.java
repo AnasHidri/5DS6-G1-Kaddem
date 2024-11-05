@@ -104,22 +104,18 @@ class ContratServiceImplTest {
     @Test
     @Order(5)
     void testRemoveContrat() {
-        // Arrange
         Integer idContrat = 1;
         Contrat contrat = new Contrat(new Date(), new Date(), Specialite.IA, false, 1);
         when(contratRepository.findById(idContrat)).thenReturn(Optional.of(contrat));
 
-        // Act
         contratService.removeContrat(idContrat);
 
-        // Assert
         verify(contratRepository).delete(any(Contrat.class));
     }
 
     @Test
     @Order(6)
     void testAffectContratToEtudiant() {
-        // Arrange
         Integer idContrat = 1;
         String nomE = "testNom";
         String prenomE = "testPrenom";
@@ -132,10 +128,8 @@ class ContratServiceImplTest {
         when(etudiantRepository.findByNomEAndPrenomE(nomE, prenomE)).thenReturn(etudiant);
         when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
-        // Act
         Contrat result = contratService.affectContratToEtudiant(idContrat, nomE, prenomE);
 
-        // Assert
         assertNotNull(result);
         verify(contratRepository).findByIdContrat(idContrat);
         verify(etudiantRepository).findByNomEAndPrenomE(nomE, prenomE);
@@ -145,15 +139,12 @@ class ContratServiceImplTest {
     @Test
     @Order(7)
     void testNbContratsValides() {
-        // Arrange
         Date startDate = new Date();
         Date endDate = new Date();
         when(contratRepository.getnbContratsValides(startDate, endDate)).thenReturn(5);
 
-        // Act
         Integer result = contratService.nbContratsValides(startDate, endDate);
 
-        // Assert
         assertEquals(5, result);
         verify(contratRepository).getnbContratsValides(startDate, endDate);
     }
@@ -161,7 +152,6 @@ class ContratServiceImplTest {
     @Test
     @Order(8)
     void testGetChiffreAffaireEntreDeuxDates() {
-        // Arrange
         Date startDate = new Date();
         Date endDate = new Date(startDate.getTime() + 30L * 24 * 60 * 60 * 1000); // 30 days later
         List<Contrat> contrats = Arrays.asList(
@@ -170,10 +160,8 @@ class ContratServiceImplTest {
         );
         when(contratRepository.findAll()).thenReturn(contrats);
 
-        // Act
         float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
 
-        // Assert
         assertTrue(result >= 0);
         verify(contratRepository).findAll();
     }

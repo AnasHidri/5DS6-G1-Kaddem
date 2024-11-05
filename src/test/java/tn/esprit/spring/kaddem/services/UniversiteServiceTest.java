@@ -19,16 +19,16 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UniversiteServiceTest {
+class UniversiteServiceTest {
 
     @Mock
-    private UniversiteRepository universiteRepository;
+    UniversiteRepository universiteRepository;
 
     @Mock
-    private DepartementRepository departementRepository;
+    DepartementRepository departementRepository;
 
     @InjectMocks
-    private UniversiteServiceImpl universiteService;
+    UniversiteServiceImpl universiteService;
 
     @Test
     @Order(1)
